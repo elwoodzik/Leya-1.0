@@ -29,8 +29,7 @@ class Loader {
         const orientation = false; //false -> vertical, true -> horizontal
 
         new Game(gameWidth, gameHeight, orientation, scallable, (game) => {
-            //game.add.multiplayer('http://localhost:4000');
-
+            //game.add.multiplayer('http://localhost:4000')
             game.keyboard.initialize();
             game.mouse.initialize();
 
