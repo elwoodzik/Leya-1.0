@@ -4,8 +4,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 module.exports = {
     entry: {
         "bundle": "./src/index.js",
-        "bundle.min": "./src/index.js",
-        "worker": "./src/components/Pages/test.js",
+        "bundle.min": "./src/index.js"
     },
     output: {
         path: __dirname + '/public/javascripts',
