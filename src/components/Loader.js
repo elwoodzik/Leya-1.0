@@ -25,9 +25,10 @@ class Loader {
     onComplete() {
         const gameWidth = 1366;
         const gameHeight = 768;
+        const scallable = true;
+        const orientation = false; //false -> vertical, true -> horizontal
 
-        new Game(gameWidth, gameHeight, false, (game) => {
-            //game.scallable(false);
+        new Game(gameWidth, gameHeight, orientation, scallable, (game) => {
             //game.add.multiplayer('http://localhost:4000');
 
             game.keyboard.initialize();

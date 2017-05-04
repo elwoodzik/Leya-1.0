@@ -13,7 +13,7 @@ let elapsed = 0,
     that;
 
 class Game {
-    constructor(width, height, orientation, callback) {
+    constructor(width, height, orientation, scallable, callback) {
         that = this;
 
         this.width = width;
@@ -56,7 +56,8 @@ class Game {
         this.gameObjectOnStatic = [];
         //
         this.createCanvas(width, height, orientation);
-        this.scallable(true);
+        
+        this.scallable(scallable);
         this.callback = callback;
         this.useFpsCounter = false;
 
