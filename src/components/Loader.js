@@ -21,7 +21,7 @@ class Loader {
     }
 
     onComplete() {
-        new Game(640, 800, false, (game) => {
+        new Game(1366, 768, false, (game) => {
             //game.scallable(false);
             //game.add.multiplayer('http://localhost:4000');
 
