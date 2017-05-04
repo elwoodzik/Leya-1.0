@@ -5,7 +5,7 @@ class Menu {
     }
 
     create() {
-        this.add.text('main', 'TO JEST STRONA STARTOWA', 100, 120, 89, '#776e65');
+        this.add.text('main', 'TO JEST STRONA STARTOWA', 35, 320, 89, '#776e65');
     }
 
     update() {
