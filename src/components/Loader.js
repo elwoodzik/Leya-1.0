@@ -1,7 +1,7 @@
 import AssetManager from '../lib_components/AssertManager';
 import Game from '../lib_components/Game';
 import Menu from './Pages/Menu';
-import Main from './Pages/Main';
+
 class Loader {
 
     constructor() {
@@ -28,9 +28,8 @@ class Loader {
             game.keyboard.initialize()
             game.mouse.initialize();
            
-            //game.state.add("Menu", Menu);
-            game.state.add("Main", Main);
-            game.state.start('Main');
+            game.state.add("Menu", Menu);
+            game.state.start('Menu');
           
         })
     }

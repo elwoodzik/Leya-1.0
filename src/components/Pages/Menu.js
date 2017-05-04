@@ -12,12 +12,6 @@ class Menu {
         this.add.button('Start', 200, 280, 180, 35, '#dc821d', '#67c743', 'black', 'black', 'black', () => {
             this.state.start('Main');
         }).fontSize = 24;
-
-
-        
-
-        
-        
     }
 
     update() {
