@@ -14,7 +14,7 @@ class Logo {
         this.TextL = this.game.add.text('main', "L", -500, -2366, 99, "white", null);
         this.TextE = this.game.add.text('main', "e", 2570, -366, 99, "white", null);
         this.TextY = this.game.add.text('main', "y", -1660, -766, 99, "white", null);
-        this.TextA = this.game.add.text('main', "a", -740, 1466, 99, "white", null);
+        this.TextA = this.game.add.text('main', "a", -722, 1466, 99, "white", null);
 
         this.TextEngine = this.game.add.text('main', "engine", 590, 2475, 40, "white", null);
 

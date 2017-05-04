@@ -91,9 +91,9 @@ class Text extends _ObjectSettings {
             this.myX = Math.floor(this.x);
             this.myY = Math.floor(this.y);
 
-            if (this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY)) {
-                this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);
-                this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
+            if (this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY)) {
+                this.x -=  ((this.myX - this.positionToMoveX) / this.positionSpeed);
+                this.y -=  ((this.myY - this.positionToMoveY) / this.positionSpeed);
                 this.body.velocity.x = 0;
                 this.body.velocity.y = 0;
             } else if (this.moveTo) {
