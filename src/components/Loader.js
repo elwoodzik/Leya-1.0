@@ -23,14 +23,14 @@ class Loader {
     }
 
     onComplete() {
-        const gameWidth = 1366
+        const gameWidth = 1366;
         const gameHeight = 768;
 
         new Game(gameWidth, gameHeight, false, (game) => {
             //game.scallable(false);
             //game.add.multiplayer('http://localhost:4000');
 
-            game.keyboard.initialize()
+            game.keyboard.initialize();
             game.mouse.initialize();
 
             game.state.add("Menu", Menu);
