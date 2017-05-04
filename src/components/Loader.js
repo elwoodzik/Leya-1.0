@@ -10,8 +10,10 @@ class Loader {
     }
 
     create() {
+        // jezeli startujesz gre z servera node z assetow musisz usunac folder public np:
+        // "first": "/images/kafelka.png"
         AssetManager.load({
-            
+            "first": "public/images/kafelka.png"
         }, this.onComplete, this.onProgress);
     }
 
@@ -21,16 +23,18 @@ class Loader {
     }
 
     onComplete() {
-        new Game(1366, 768, false, (game) => {
+        const gameWidth = 1366
+        const gameHeight = 768;
+
+        new Game(gameWidth, gameHeight, false, (game) => {
             //game.scallable(false);
             //game.add.multiplayer('http://localhost:4000');
 
             game.keyboard.initialize()
             game.mouse.initialize();
-           
+
             game.state.add("Menu", Menu);
             game.state.start('Menu');
-          
         })
     }
 }
