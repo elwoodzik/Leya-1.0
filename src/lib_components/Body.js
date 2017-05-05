@@ -44,25 +44,30 @@ class Body {
     rotate(val) {
         return this.angle = val;
     }
-        
+
     setAnchor(x, y) {
         this.anchorX = x;
         this.anchorY = y;
     }
 
-    rotateByMouse(min, max) {
-        var _min = min || false;
-        var _max = max || false;
-        var _ang = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
-        if (_min && _max) {
-            if (_ang <= max && _ang >= min) {
-                this.angle = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
-            }
-        } else {
-            this.angle = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
-        }
+    rotateByMouse(spritePosition) {
+        let dir = 0;
 
-        return this.angle;
+        
+        // var _ang = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
+        // if (min && max) {
+        //     if (_ang <= max && _ang >= min) {
+        //         this.angle = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
+        //     }
+        // } else {
+        //     this.angle = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI);
+        // }
+        const disX = Math.abs(this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfWidth);
+        const disY = Math.abs(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfHeight);
+        if (disX > 20 || disY > 20) {
+            this.angle = Math.atan2(this.game.mouse.mouseY - this.sprite.y - this.sprite.currentHalfWidth, this.game.mouse.mouseX - this.sprite.x - this.sprite.currentHalfHeight) * (180 / Math.PI) - spritePosition;
+            return this.angle;
+        }
     }
 }
 

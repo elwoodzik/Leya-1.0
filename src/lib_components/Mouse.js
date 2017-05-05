@@ -292,7 +292,7 @@ class Mouse{
                 }
                 else if (obj === null) {
                     if (typeof callback === 'function') {
-                        this.click = false;
+                        //this.click = false;
                         this.trig = false;
                         this.down = false;
                         callback.call(this, this,);

@@ -78,7 +78,7 @@ class Rect extends _ObjectSettings {
         this.worldBounce();
         this.scaleUpDownHandler();
         this.moveToPointHandler();
-        
+
         this.x = (this.x + (dt * this.body.velocity.x));
         this.y = (this.y + (dt * this.body.velocity.y));
     }
@@ -89,6 +89,33 @@ class Rect extends _ObjectSettings {
 
     setAlfa(alfa) {
         this.alfa = alfa;
+    }
+
+    moveByLine(_mouseX, _mouseY, _speed, _maxDistance, _callback) {
+        if (!_mouseX || !_mouseY) {
+            return false;
+        }
+        let dx = (_mouseX - this.x - this.currentHalfWidth);
+        let dy = (_mouseY - this.y - this.currentHalfHeight);
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let maxDistance = _maxDistance || 4;
+        let speed = _speed || 4;
+        this.body.angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        //this.body.rotate(this.body.angle / (180 / Math.PI));
+
+        if (distance > maxDistance) {
+            // if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
+                
+            this.body.velocity.x = Math.cos(this.body.angle / (180 / Math.PI)) * speed;
+            this.body.velocity.y = Math.sin(this.body.angle / (180 / Math.PI)) * speed;
+            //}
+        } else {
+            this.body.velocity.x = 0;//Math.cos(angle) * speed;
+            this.body.velocity.y = 0;//Math.sin(angle) * speed;
+            if (typeof _callback === 'function') {
+                this._callback.call(this.game, this);
+            }
+        }
     }
 
     moveToPoint(x, y, speed, callback) {

@@ -253,19 +253,59 @@ class Sprite extends _ObjectSettings {
         }
     }
 
+    moveByLineToEnd(_mouseX, _mouseY, _speed, _maxDistance, type, _callback) {
+        if (!_mouseX || !_mouseY) {
+            return false;
+        }
+
+        let dx = (_mouseX - this.x - this.currentHalfWidth);
+        let dy = (_mouseY - this.y - this.currentHalfHeight);
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let maxDistance = _maxDistance || 10;
+        let speed = _speed || 4;
+
+        if (distance > maxDistance) {
+            if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
+                if (type === 'up') {
+                    this.body.velocity.x = Math.cos((this.body.angle) / (180 / Math.PI)) * speed;
+                    this.body.velocity.y = Math.sin((this.body.angle) / (180 / Math.PI)) * speed;
+                }
+                else if (type === 'down') {
+                    this.body.velocity.x = Math.cos((this.body.angle) - 180 / (180 / Math.PI)) * speed;
+                    this.body.velocity.y = Math.sin((this.body.angle) - 180 / (180 / Math.PI)) * speed;
+                }
+                if (type === 'left') {
+                    this.body.velocity.x = Math.cos((this.body.angle - 90) / (180 / Math.PI)) * speed;
+                    this.body.velocity.y = Math.sin((this.body.angle - 90) / (180 / Math.PI)) * speed;
+                }
+                else if (type === 'right') {
+                    this.body.velocity.x = Math.cos((this.body.angle + 90) / (180 / Math.PI)) * speed;
+                    this.body.velocity.y = Math.sin((this.body.angle + 90) / (180 / Math.PI)) * speed;
+                }
+            }
+        } else {
+            this.body.velocity.x = 0;//Math.cos(angle) * speed;
+            this.body.velocity.y = 0;//Math.sin(angle) * speed;w
+
+            if (typeof _callback === 'function') {
+                this._callback.call(this.game, this);
+            }
+        }
+    }
+
     moveByLine(_mouseX, _mouseY, _speed, _maxDistance, _callback) {
         if (!_mouseX || !_mouseY) {
             return false;
         }
-        var dx = (_mouseX - this.x - this.currentHalfWidth);
-        var dy = (_mouseY - this.y - this.currentHalfHeight);
-        var distance = Math.sqrt(dx * dx + dy * dy);
-        var maxDistance = _maxDistance || 4;
-        var speed = _speed || 4;
+        let dx = (_mouseX - this.x - this.currentHalfWidth);
+        let dy = (_mouseY - this.y - this.currentHalfHeight);
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let maxDistance = _maxDistance || 4;
+        let speed = _speed || 4;
 
         if (distance > maxDistance) {
             if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
-                var angle = Math.atan2(dy, dx);
+                let angle = Math.atan2(dy, dx);
                 this.body.rotate(angle * (180 / Math.PI));
 
                 this.body.velocity.x = Math.cos(angle) * speed;
