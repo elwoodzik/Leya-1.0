@@ -42,6 +42,7 @@ class Button extends _ObjectSettings {
         }
         if (this.touchActive && typeof this.action === 'function') {
             this.action.call(this.game, this);
+            this.touchActive = false;
         } else if (!this.touchActive && this.game.mouse.updateHoverStats(this, true) && this.game.mouse.click && typeof this.action === 'function') {
             if (!this.hold) {
                 this.game.mouse.click = false;

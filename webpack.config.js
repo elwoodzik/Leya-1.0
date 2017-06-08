@@ -4,7 +4,6 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 module.exports = {
     entry: {
         "bundle": "./src/index.js",
-        "bundle.min": "./src/index.js"
     },
     output: {
         path: __dirname + '/public/javascripts',
@@ -23,11 +22,11 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            minimize: true,
-            sourceMap: false,
-            debug: false
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     include: /\.min\.js$/,
+        //     minimize: true,
+        //     sourceMap: false,
+        //     debug: false
+        // })
     ]
 };

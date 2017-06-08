@@ -36,32 +36,34 @@ class Map extends _ObjectSettings {
     }
 
     generate() {
-        let ctx = document.createElement("canvas").getContext("2d");
-        ctx.canvas.width = this.b[0].length * 32;
-        ctx.canvas.height = this.b.length * 32;
+        if (!this.game.mobile.active) {
+            let ctx = document.createElement("canvas").getContext("2d");
+            ctx.canvas.width = this.b[0].length * 32;
+            ctx.canvas.height = this.b.length * 32;
 
-        for (let i = 0; i < this.b.length; i++) {
-            // 
-            for (let j = 0; j < this.b[i].length; j++) {
+            for (let i = 0; i < this.b.length; i++) {
                 // 
-                ctx.drawImage(
-                    this.image,
-                    this.b[i][j].x,
-                    this.b[i][j].y,
-                    this.w,
-                    this.h,
-                    Math.floor((j * (this.currentWidth)) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0)),
-                    Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0)),
-                    (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
-                    (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
-                );
+                for (let j = 0; j < this.b[i].length; j++) {
+                    // 
+                    ctx.drawImage(
+                        this.image,
+                        this.b[i][j].x,
+                        this.b[i][j].y,
+                        this.w,
+                        this.h,
+                        Math.floor((j * (this.currentWidth)) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0)),
+                        Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0)),
+                        (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
+                        (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
+                    );
+                }
             }
+
+            this.imageMap = new Image();
+            this.imageMap.src = ctx.canvas.toDataURL("image/png");
+
+            ctx = null;
         }
-
-        this.imageMap = new Image();
-        this.imageMap.src = ctx.canvas.toDataURL("image/png");
-
-        ctx = null;
     }
 
     draw(dt) {
@@ -69,18 +71,38 @@ class Map extends _ObjectSettings {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
-        
-        this.context.drawImage(
-            this.imageMap,
-             0, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
-             0, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
-            this.cw,
-            this.ch,
-            0,
-            0,
-            this.cw,
-            this.ch
-        );
+
+        if (!this.game.mobile.active) {
+            this.context.drawImage(
+                this.imageMap,
+                0, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
+                0, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
+                this.cw,
+                this.ch,
+                0,
+                0,
+                this.cw,
+                this.ch
+            );
+        } else {
+            for (let i = 0; i < this.b.length; i++) {
+                // 
+                for (let j = 0; j < this.b[i].length; j++) {
+                    // 
+                    this.context.drawImage(
+                        this.image,
+                        this.b[i][j].x,
+                        this.b[i][j].y,
+                        this.w,
+                        this.h,
+                        Math.floor((j * (this.currentWidth)) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0)),
+                        Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0)),
+                        (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
+                        (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
+                    );
+                }
+            }
+        }
 
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();

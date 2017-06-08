@@ -54,7 +54,7 @@ class Mouse{
 
     touchStart(e) {
         e.preventDefault();
-        const touches = event.changedTouches;
+        const touches = e.changedTouches;
         // let touch = e.changedTouches[0];
 
         for (let i = 0; i < touches.length; i++) {
@@ -71,7 +71,7 @@ class Mouse{
     }
 
     touchEnded(e) {
-        const touches = event.changedTouches;
+        const touches = e.changedTouches;
 
         for (let i = 0; i < touches.length; i++) {
             let touch = touches[i];
@@ -92,11 +92,11 @@ class Mouse{
             let currentTouchIndex = this.findCurrentTouchIndex(touch.identifier);
 
             if (currentTouchIndex >= 0) {
-                //let currentTouch = this.currentTouches[currentTouchIndex];
+                let currentTouch = this.currentTouches[currentTouchIndex];
 
                 this.currentTouches.splice(currentTouchIndex, 1);
             } else {
-                console.log('Touch was not found!');
+                //console.log('Touch was not found!');
             }
         }
     }
@@ -308,7 +308,7 @@ class Mouse{
 
                 this.trig = hold ? true : false;
                 if(this.sellectedObj === obj){
-                    console.log('a')
+                   // console.log('a')
                     return;
                 }
                 if (Array.isArray(obj)) {

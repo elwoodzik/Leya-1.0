@@ -5,7 +5,7 @@ import Physic from './Physic';
 import Mouse from './Mouse';
 import Keyboard from './Keyboard';
 import Logo from './Logo';
-
+import Mobile from './Mobile';
 
 let elapsed = 0,
     last = 0,
@@ -13,7 +13,7 @@ let elapsed = 0,
     that;
 
 class Game {
-    constructor(width, height, orientation, scallable, callback) {
+    constructor(width, height, orientation, scallable, mobile, callback) {
         that = this;
 
         this.width = width;
@@ -29,6 +29,8 @@ class Game {
         this.add = new GameObjectFactory(this);
 
         this.state = new GameStateFactory(this);
+
+        this.mobile = new Mobile(this, mobile);
 
         // this.world = new World(this);
 
@@ -56,7 +58,7 @@ class Game {
         this.gameObjectOnStatic = [];
         //
         this.createCanvas(width, height, orientation);
-        
+
         this.scallable(scallable);
         this.callback = callback;
         this.useFpsCounter = false;
@@ -74,7 +76,7 @@ class Game {
         this.timerCallback = callback;
         this.timerFadeOutActive = true;
         this.timerFadeInActive = false;
-        this.mouse.used = false;    
+        this.mouse.used = false;
     }
 
     fadeIn(time, callback) {
@@ -86,12 +88,12 @@ class Game {
 
     fadeOutHandler() {
         if (this.timerFadeOutActive) {
-             
+
             this.currentTimerFade -= 1 / 60 * 1000;
             this.ctx.globalAlpha = this.currentTimerFade / this.timerFade;
-            
+
             if (this.currentTimerFade <= 0) {
-               
+
                 this.ctx.globalAlpha = 0;
                 this.timerFadeOutActive = false;
                 if (typeof this.timerCallback === 'function') {
@@ -146,7 +148,7 @@ class Game {
             this.fpsmeter.tick();
         }
 
-        requestAnimationFrame(this.animationLoop.bind(this));
+        window.requestAnimationFrame(this.animationLoop.bind(this));
     }
 
     render(dt) {
@@ -215,10 +217,13 @@ class Game {
 
         this.canvas.style.width = this.canvas.width + "px";
         this.canvas.style.height = this.canvas.height + "px";
-        this.canvas.style.position = 'absolute';
-        this.canvas.style.left = '50%';
-        this.canvas.style.marginLeft = -this.canvas.width / 2 + "px";
-        this.scale1 = 1;
+
+        if (!this.mobile.active) {
+            this.canvas.style.position = 'absolute';
+            this.canvas.style.left = '50%';
+            this.canvas.style.marginLeft = -this.canvas.width / 2 + "px";
+            this.scale1 = 1;
+        }
 
         document.body.style.overflow = 'hidden';
 
@@ -236,9 +241,11 @@ class Game {
         this.bgcanvas.width = ((this.screenWidth));
         this.bgcanvas.height = ((this.screenHeight));
 
-        this.bgcanvas.style.position = 'absolute';
-        this.bgcanvas.style.left = '50%';
-        this.bgcanvas.style.marginLeft = -this.screenWidth / 2 + "px";
+        if (!this.mobile.active) {
+            this.bgcanvas.style.position = 'absolute';
+            this.bgcanvas.style.left = '50%';
+            this.bgcanvas.style.marginLeft = -this.screenWidth / 2 + "px";
+        }
 
         document.body.appendChild(this.bgcanvas);
     }
@@ -252,11 +259,11 @@ class Game {
         this.onbgcanvas.width = ((this.screenWidth));
         this.onbgcanvas.height = ((this.screenHeight));
 
-
-        this.onbgcanvas.style.position = 'absolute';
-        this.onbgcanvas.style.left = '50%';
-        this.onbgcanvas.style.marginLeft = -this.onbgcanvas.width / 2 + "px";
-
+        if (!this.mobile.active) {
+            this.onbgcanvas.style.position = 'absolute';
+            this.onbgcanvas.style.left = '50%';
+            this.onbgcanvas.style.marginLeft = -this.onbgcanvas.width / 2 + "px";
+        }
 
         document.body.appendChild(this.onbgcanvas);
     }
@@ -280,16 +287,21 @@ class Game {
 
                 canvas.style.width = width + "px";
                 canvas.style.height = height + "px";
-                canvas.style.position = 'absolute';
-                canvas.style.left = '50%';
-                canvas.style.marginLeft = -width / 2 + "px";
+              
+                if (!this.mobile.active) {
+                    canvas.style.position = 'absolute';
+                    canvas.style.left = '50%';
+                    canvas.style.marginLeft = -width / 2 + "px";
+                }
             } else {
                 this.scale1 = 1;
                 canvas.style.width = this.portViewWidth + "px";
                 canvas.style.height = this.portViewHeight + "px";
-                canvas.style.position = 'absolute';
-                canvas.style.left = '50%';
-                canvas.style.marginLeft = -this.screenWidth / 2 + "px";
+                if (!this.mobile.active) {
+                    canvas.style.position = 'absolute';
+                    canvas.style.left = '50%';
+                    canvas.style.marginLeft = -this.screenWidth / 2 + "px";
+                }
             }
         } else {
             const w = window.innerHeight;
@@ -423,6 +435,10 @@ class Game {
     showFPS() {
         this.fpsmeter = new FPSMeter({ decimals: 0, graph: false, theme: 'dark', left: '5px' });
         this.useFpsCounter = true;
+    }
+
+    mobile() {
+
     }
 
 
