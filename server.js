@@ -20,7 +20,7 @@ server.use('/', homePage);
 server.use(express.static('public'));
 
 const sock_io = io.listen(server.listen(config.port, config.host, () => {
-    console.info('Express listening on port', config.port);
+    console.info('Server listening on ' +config.host+":"+config.port);
 }))
 
 new Game(sock_io);

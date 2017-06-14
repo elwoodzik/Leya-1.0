@@ -27,6 +27,10 @@ class Text extends _ObjectSettings {
 
         this.textSize = this.context.measureText(this.text);
 
+        this.useStroke = false;
+        this.strokeColor = '#333';
+        this.strokeWidth = 2;
+
         this.currentWidth = this.textSize.width;
         this.currentHeight = this.fontSize;
         this.currentHalfWidth = this.textSize.width / 2;
@@ -48,6 +52,11 @@ class Text extends _ObjectSettings {
         this.context.font = this.fontSize + "px Forte";
         this.context.fillStyle = this.color;
         this.context.fillText(this.text, this.x, this.y);
+        if (this.useStroke) {
+            this.context.lineWidth = this.strokeWidth;
+            this.context.strokeStyle = this.strokeColor;
+            this.context.strokeText(this.text, this.x, this.y);
+        }
 
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
@@ -92,8 +101,8 @@ class Text extends _ObjectSettings {
             this.myY = Math.floor(this.y);
 
             if (this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY)) {
-                this.x -=  ((this.myX - this.positionToMoveX) / this.positionSpeed);
-                this.y -=  ((this.myY - this.positionToMoveY) / this.positionSpeed);
+                this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);
+                this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
                 this.body.velocity.x = 0;
                 this.body.velocity.y = 0;
             } else if (this.moveTo) {

@@ -22,8 +22,17 @@ class ButtonImg extends _ObjectSettings {
     }
 
     update() {
-        if (this.game.mouse.updateStats(this) && this.game.mouse.click && typeof this.action === 'function') {
-            this.game.mouse.click = false;
+        if (!this.touchActive) {
+            this.game.mouse.touchIntersects(this, true);
+        }
+        if (this.touchActive && typeof this.action === 'function') {
+            this.action.call(this.game, this);
+            this.touchActive = false;
+        } else if (!this.touchActive && this.game.mouse.updateHoverStats(this, true) && this.game.mouse.click && typeof this.action === 'function') {
+            if (!this.hold) {
+                this.game.mouse.click = false;
+            }
+
             this.action.call(this.game, this);
         }
     }
@@ -64,6 +73,13 @@ class ButtonImg extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+    }
+
+    changeImg(key) {
+        this.key = key;
+    }
+    changeImgHover(key) {
+        this.keyHover = key;
     }
 };
 
