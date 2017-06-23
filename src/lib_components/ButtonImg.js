@@ -19,6 +19,8 @@ class ButtonImg extends _ObjectSettings {
 
         this.action = action;
         this.zIndex = 5;
+        this.toggleTime = 300;
+        this.fadeIn(this.toggleTime, null)
     }
 
     update() {
@@ -38,10 +40,12 @@ class ButtonImg extends _ObjectSettings {
     }
 
     draw(dt) {
-        if (this.objAlfa !== 1) {
+
+        if (this.objAlfa !== 1 && this.game.ctx.globalAlpha === 1) {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
+
 
         if (this.hovered) {
             this.image = this.AssetManager.get(this.keyHover);
@@ -73,6 +77,8 @@ class ButtonImg extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+        this.fadeInHandler();
+        this.fadeOutHandler();
     }
 
     changeImg(key) {

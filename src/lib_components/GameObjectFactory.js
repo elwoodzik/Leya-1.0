@@ -7,6 +7,7 @@ import Button from './Button';
 import Bar from './Bar';
 import Camera from './Camera';
 import Dialog from './Dialog';
+import DialogImg from './DialogImg';
 import Particles from './Particles';
 import ButtonImg from './ButtonImg';
 import Grid from './Grid';
@@ -79,12 +80,16 @@ class GameObjectFactory {
         return new Dialog(this.game, context, x, y, w, h, s, f);
     }
 
+    dialogImg(x, y, width, height, key, close) {
+        return new DialogImg(this.game, x, y, width, height, key, close);
+    }
+
     sounds(sounds) {
         return this.game.sounds = sounds;
     }
 
     toMulti(obj) {
-       
+
         let o = {
             x: obj.x,
             y: obj.y,

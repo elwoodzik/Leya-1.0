@@ -225,7 +225,7 @@ class _ObjectSettings {
             this.currentTimerFade -= 1 / 60 * 1000;
             this.objAlfa = this.currentTimerFade / this.timerFade;
             
-            if(this.currentTimerFade < 0){
+            if(this.currentTimerFade <= 0){
                 this.objAlfa = 0;
                 this.timerFadeOutActive = false;
                 if(typeof this.timerCallback === 'function'){
@@ -241,9 +241,10 @@ class _ObjectSettings {
             this.currentTimerFade += 1 / 60 * 1000;
             this.objAlfa = this.currentTimerFade / this.timerFade;
             
-            if(this.currentTimerFade > this.timerFade){
+            if(this.currentTimerFade >= this.timerFade){
                 this.timerFadeInActive = false;
                 this.objAlfa = 1;
+            
                 if(typeof this.timerCallback === 'function'){
                     return this.timerCallback.call();
                 } 
