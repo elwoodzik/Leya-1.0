@@ -36,6 +36,8 @@ class Text extends _ObjectSettings {
         this.currentHalfWidth = this.textSize.width / 2;
         this.currentHalfHeight = this.fontSize / 2;
         this.zIndex = 5;
+        this.toggleTime = 0;
+        this.fadeIn(this.toggleTime, null)
     }
 
     update(dt) {
@@ -61,6 +63,8 @@ class Text extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+        this.fadeInHandler();
+        this.fadeOutHandler();
     }
 
     redraw() {

@@ -38,8 +38,8 @@ class Map extends _ObjectSettings {
     generate() {
         if (!this.game.mobile.active) {
             let ctx = document.createElement("canvas").getContext("2d");
-            ctx.canvas.width = this.b[0].length * 32;
-            ctx.canvas.height = this.b.length * 32;
+            ctx.canvas.width = this.b[0].length * 64;
+            ctx.canvas.height = this.b.length * 64;
 
             for (let i = 0; i < this.b.length; i++) {
                 // 
@@ -114,8 +114,9 @@ class Map extends _ObjectSettings {
 
         for (let i = 0; i < this.objects.length; i++) {
             obj = this.objects[i];
+
             if (obj.pool) {
-                let objCreated = this.game.CLASS[obj.name].pnew(this.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - (this.offsetY || 0) + (obj.marginY || 0), obj.image);
+                let objCreated = this.game.CLASS[obj.name].pnew(this.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - (this.offsetY || 0) + (obj.marginY || 0), obj.image, obj.w || null, obj.h || null);
                 if (obj.method) {
                     for (let j = 0; j < obj.method.length; j++) {
                         objCreated[obj.method[j].name](obj.method[j].attr[0], obj.method[j].attr[1], obj.method[j].attr[2])
@@ -145,8 +146,8 @@ class Map extends _ObjectSettings {
             this.b.push([]);
             for (let j = 0; j < arr[i].length; j++) {
                 let tile = {};
-                tile.x = ((arr[i][j] - 1) % 13) * 32;
-                tile.y = (Math.floor((arr[i][j] - 1) / 13)) * 32;
+                tile.x = ((arr[i][j] - 1) % 13) * 64;
+                tile.y = (Math.floor((arr[i][j] - 1) / 13)) * 64;
 
                 if (this.tiles[arr[i][j] - 1]) {
                     tile.type = !this.tiles[arr[i][j] - 1].type ? 'empty' : this.tiles[arr[i][j] - 1].type;

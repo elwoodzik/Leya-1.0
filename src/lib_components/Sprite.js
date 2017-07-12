@@ -136,6 +136,7 @@ class Sprite extends _ObjectSettings {
         this.useThereAndBack();
         this.scaleUpDownHandler();
         this.doInTimeHandler();
+        this.moveToPointLinearHandler();
 
         if (this.body.velocity.x != 0 || this.body.velocity.y != 0) {
             this.x += (dt * this.body.velocity.x);
@@ -156,8 +157,7 @@ class Sprite extends _ObjectSettings {
     frameUpdate(dt) {
         if (!this.once) {
             if (this.change_f_delay < this.f_max_delay) {
-                this.change_f_delay += (1 + this.change_f_delay) * (dt * 100);
-
+                this.change_f_delay += (1) * (dt * 100);
             } else {
                 this.change_f_delay = 0;
                 this.current_f = this.current_f + 1 >= this.states[this.state].f.length ? 0 : this.current_f + 1;
@@ -263,7 +263,7 @@ class Sprite extends _ObjectSettings {
         let distance = Math.sqrt(dx * dx + dy * dy);
         let maxDistance = _maxDistance || 10;
         let speed = _speed || 4;
-
+       
         if (distance > maxDistance) {
             if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
                 if (type === 'up') {
@@ -320,6 +320,50 @@ class Sprite extends _ObjectSettings {
         }
     }
 
+    moveToPointLinear(x, y, speed, type, callback) {
+        this.positionToLinearMoveX = Math.floor(x);
+        this.positionToLinearMoveY = Math.floor(y);
+        this.linearSpeed = speed;
+        this.linearType = type;
+        this.moveLinearTo = true;
+        this.positionLinearCallback = callback;
+    }
+
+    moveToPointLinearHandler() {
+        if (this.moveLinearTo) {
+            if (this.linearType === 'down') {
+                if (this.y <= this.positionToLinearMoveY) {
+                    this.body.velocity.y = +this.linearSpeed;
+                } else {
+                    this.moveLinearTo = false;
+                    this.positionLinearCallback.call(this.game, this);
+                }
+            } else if (this.linearType === 'up') {
+                if (this.y >= this.positionToLinearMoveY) {
+                    this.body.velocity.y = -this.linearSpeed;
+                } else {
+                    this.moveLinearTo = false;
+                    this.positionLinearCallback.call(this.game, this);
+                }
+            }else if (this.linearType === 'right') {
+                if (this.x <= this.positionToLinearMoveX) {
+                    this.body.velocity.x = +this.linearSpeed;
+                } else {
+                    this.moveLinearTo = false;
+                    this.positionLinearCallback.call(this.game, this);
+                }
+            }else if (this.linearType === 'left') {
+                if (this.x >= this.positionToLinearMoveX) {
+                    this.body.velocity.x = -this.linearSpeed;
+                } else {
+                    this.moveLinearTo = false;
+                    this.positionLinearCallback.call(this.game, this);
+                }
+            }
+            
+        }
+    }
+
     moveToPoint(x, y, speed, callback) {
         this.positionToMoveX = Math.floor(x);
         this.positionToMoveY = Math.floor(y);
@@ -336,10 +380,10 @@ class Sprite extends _ObjectSettings {
     moveToPointHandler() {
         if (this.moveTo) {
 
-            this.myX = Math.floor(this.x + this.currentWidth / 2);
-            this.myY = Math.floor(this.y + this.currentHeight / 2);
+            this.myX = Math.floor(this.x);
+            this.myY = Math.floor(this.y);
 
-            if (this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY)) {
+            if (this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY)) {
                 this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);
                 this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
                 this.body.velocity.x = 0;

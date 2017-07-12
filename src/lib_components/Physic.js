@@ -46,7 +46,7 @@ class Physic {
         }
     }
 
-    overlap(obj1, obj2, callback, bounds) {
+    overlap(obj1, obj2, margin, callback, bounds) {
         if (!obj1 || !obj2 || (Array.isArray(obj1) && obj1.length <= 0) || (Array.isArray(obj2) && obj2.length <= 0)) {
             return false;
         }
@@ -54,7 +54,7 @@ class Physic {
             if (typeof obj1 === 'object') {
                 for (let i = 0, max = obj2.length; i < max; i++) {
                     if (obj2[i] !== null && obj1 !== null && obj1 !== obj2[i]) {
-                        this.collectedHandler(obj1, obj2[i], callback, bounds);
+                        this.collectedHandler(obj1, obj2[i], margin, callback, bounds);
                     }
 
                 }
@@ -65,7 +65,7 @@ class Physic {
         if (Array.isArray(obj1) && !Array.isArray(obj2)) {
             if (typeof obj2 === 'object') {
                 for (let i = 0, max = obj1.length; i < max; i++) {
-                    this.collectedHandler(obj1[i], obj2, callback, bounds);
+                    this.collectedHandler(obj1[i], obj2, margin, callback, bounds);
                 }
             } else {
                 throw 'overlap(): oczekiwano obiektu jako drugi parametr';
@@ -81,7 +81,7 @@ class Physic {
                 for (let j = 0, max1 = obj2.length; j < max1; j++) {
                     if (obj2[j]) {
                         obj2[j].checked = false;
-                        this.collectedHandler(obj1[i], obj2[j], callback, bounds);
+                        this.collectedHandler(obj1[i], obj2[j], margin, callback, bounds);
                     } else {
                         return false;
                     }
@@ -91,17 +91,17 @@ class Physic {
         if (!Array.isArray(obj1) && !Array.isArray(obj2)) {
             obj1.checked = false;
             obj2.checked = false;
-            this.collectedHandler(obj1, obj2, callback, bounds);
+            this.collectedHandler(obj1, obj2, margin, callback, bounds);
         }
     }
 
-    collectedHandler(entity1, entity2, callback, bounds) {
+    collectedHandler(entity1, entity2, margin, callback, bounds) {
         if (entity1 != entity2 && entity1 && entity2) {
             if (entity1.useCollision && entity2.useCollision) {
-                let vX = (entity1.x + (entity1.currentHalfWidth)) - (entity2.x + (entity2.currentHalfWidth)),
-                    vY = (entity1.y + (entity1.currentHalfHeight)) - (entity2.y + (entity2.currentHalfHeight)),
-                    hWidths = (entity1.currentHalfWidth) + (entity2.currentHalfWidth),
-                    hHeights = (entity1.currentHalfHeight) + (entity2.currentHalfHeight),
+                let vX = (entity1.x + (entity1.currentHalfWidth -margin )) - (entity2.x + (entity2.currentHalfWidth -margin)),
+                    vY = (entity1.y + (entity1.currentHalfHeight -margin )) - (entity2.y + (entity2.currentHalfHeight -margin)),
+                    hWidths = (entity1.currentHalfWidth -margin ) + (entity2.currentHalfWidth -margin),
+                    hHeights = (entity1.currentHalfHeight -margin ) + (entity2.currentHalfHeight -margin),
                     colDir = null;
 
                 if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
