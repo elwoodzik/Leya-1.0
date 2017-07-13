@@ -1,8 +1,6 @@
 import AssetManager from '../lib_components/AssertManager';
 import Game from '../lib_components/Game';
 import Menu from './Pages/Menu';
-import LevelSelect from './Pages/LevelSelect';
-import Main from './Pages/Main';
 
 class Loader {
 
@@ -58,8 +56,6 @@ class Loader {
             game.keyboard.initialize();
             game.mouse.initialize();
             game.state.add("Menu", Menu);
-            game.state.add("Main", Main);
-            game.state.add("LevelSelect", LevelSelect);
             game.state.start('Menu');
         })
     }
