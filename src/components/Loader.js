@@ -11,31 +11,7 @@ class Loader {
 
     create() {
         AssetManager.load({
-            'mapa': '/images/mapa.png',
-            'mapa2': '/images/mapa2.png',
-            'mapa3': '/images/mapa3.png',
-            'player': '/images/player.png',
-            'placed': '/images/kafelka2.png',
-            'balls': '/images/balls.png',
-            'bgPanel': '/images/Panel.png',
-            'base': '/images/base.png',
-            'levelSelect': '/images/levelSelect.png',
-            'back_btn': '/images/back_btn.png',
-            'block_active': '/images/block_active.png',
-            'block_locked': '/images/block_locked.png',
-            'btn_right': '/images/btn_right.png',
-            'btn_up': '/images/btn_up.png',
-            'btn_left': '/images/btn_left.png',
-            'btn_down': '/images/btn_down.png',
-            'btn_menu': '/images/btn_menu.png',
-            'btn_prev': '/images/btn_prev.png',
-            'option': '/images/option.png',
-            'btn_play': '/images/btn_play.png',
-            'btn_reload': '/images/btn_reload.png',
-            'x_icon': '/images/x_icon.png',
-            'win_dialog': '/images/win_dialog.png',
-            'tiles': '/images/sokoban64.png',
-
+            //'mapa': '/images/mapa.png',
         }, this.onComplete, this.onProgress);
     }
 
