@@ -11,6 +11,8 @@ class _ObjectSettings {
         this.contextType = options.context;
         this.x = options.x;
         this.y = options.y;
+        this.startX = options.x;
+        this.startY = options.y;
         this.key = options.key;
         this.isOutOfScreen = false;
         this.updateOfScreen = true;
@@ -23,7 +25,7 @@ class _ObjectSettings {
         this.objAlfa = 1;
         this.playerControlled = true;
         this._arguments = this.setArguments(arguments[0]);
-        
+
         if (this.key) {
             this.image = AssetManager.get(this.key);
         }
@@ -41,15 +43,15 @@ class _ObjectSettings {
         }
     }
 
-    setArguments(_arguments){
+    setArguments(_arguments) {
         let _arg = [];
-        Object.keys(_arguments).forEach( (ttt) => {
-            if(ttt !== 'game'){
-               _arg.push(_arguments[ttt]);
+        Object.keys(_arguments).forEach((ttt) => {
+            if (ttt !== 'game') {
+                _arg.push(_arguments[ttt]);
             }
-           
+
         });
-       return _arg;
+        return _arg;
     }
 
     worldBounce() {
@@ -142,7 +144,7 @@ class _ObjectSettings {
         if (this.scaleUpTrig) {
             if (this.scale < this.scaleToo) {
                 this.scale += this.scaleSpeed;
-                if(this.scale > this.scaleToo){
+                if (this.scale > this.scaleToo) {
                     this.scale = this.scaleToo;
                 }
             } else {
@@ -190,7 +192,7 @@ class _ObjectSettings {
     doInTimeHandler() {
         if (this.inTime) {
             this.timeLocal += 1 / 60 * 1000;
-            
+
             if (this.timeLocal > this.timeMax) {
                 this.timeLocal = 0;
                 this.inTime = false;
@@ -199,55 +201,55 @@ class _ObjectSettings {
         }
     }
 
-    stop(){
+    stop() {
         this.inTime = false;
     }
 
-    fadeOut(time, callback){
+    fadeOut(time, callback) {
         this.timerFade = time;
         this.currentTimerFade = time;
         this.timerFadeMin = 0;
         this.timerCallback = callback;
-        this.timerFadeOutActive = true; 
+        this.timerFadeOutActive = true;
     }
 
-    fadeIn(time, callback){
+    fadeIn(time, callback) {
         this.timerFade = time;
         this.currentTimerFade = 0;
         this.timerFadeMin = 0;
         this.timerCallback = callback;
-        this.timerFadeInActive = true; 
+        this.timerFadeInActive = true;
     }
 
-    fadeOutHandler(){
+    fadeOutHandler() {
         if (this.timerFadeOutActive) {
 
             this.currentTimerFade -= 1 / 60 * 1000;
             this.objAlfa = this.currentTimerFade / this.timerFade;
-            
-            if(this.currentTimerFade <= 0){
+
+            if (this.currentTimerFade <= 0) {
                 this.objAlfa = 0;
                 this.timerFadeOutActive = false;
-                if(typeof this.timerCallback === 'function'){
+                if (typeof this.timerCallback === 'function') {
                     return this.timerCallback.call();
-                } 
+                }
             }
         }
     }
 
-    fadeInHandler(){
+    fadeInHandler() {
         if (this.timerFadeInActive) {
 
             this.currentTimerFade += 1 / 60 * 1000;
             this.objAlfa = this.currentTimerFade / this.timerFade;
-            
-            if(this.currentTimerFade >= this.timerFade){
+
+            if (this.currentTimerFade >= this.timerFade) {
                 this.timerFadeInActive = false;
                 this.objAlfa = 1;
-            
-                if(typeof this.timerCallback === 'function'){
+
+                if (typeof this.timerCallback === 'function') {
                     return this.timerCallback.call();
-                } 
+                }
             }
         }
     }

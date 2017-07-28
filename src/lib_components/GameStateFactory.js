@@ -63,7 +63,7 @@ class GameStateFactory {
                         this.game.renderOnStatic();
                     }
                     this.game.sortByIndex();
-
+                    
                     setTimeout(() => {
                         if (!this.game.timerFadeOutActive) {
                             this.game.fadeIn(options.fadeIn || 400, null)

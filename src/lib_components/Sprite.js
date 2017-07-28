@@ -84,6 +84,9 @@ class Sprite extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+
+        this.fadeInHandler();
+        this.fadeOutHandler();
         //this.frameUpdate(dt);
     }
 

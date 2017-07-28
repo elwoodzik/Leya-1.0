@@ -37,19 +37,22 @@ class Button extends _ObjectSettings {
     }
 
     update() {
-        if (!this.touchActive) {
-            this.game.mouse.touchIntersects(this, true);
-        }
-        if (this.touchActive && typeof this.action === 'function') {
-            this.action.call(this.game, this);
-            this.touchActive = false;
-        } else if (!this.touchActive && this.game.mouse.updateHoverStats(this, true) && this.game.mouse.click && typeof this.action === 'function') {
-            if (!this.hold) {
-                this.game.mouse.click = false;
-            }
+        // if (!this.touchActive) {
+        //     this.game.mouse.touchIntersects(this, true);
+        // }
+        this.game.mouse.trigger(this, false, () => {
+            this.action.call(this.game, this)
+        }, true)
+        // if (this.touchActive && typeof this.action === 'function') {
+        //     this.action.call(this.game, this);
+        //     this.touchActive = false;
+        // } else if (!this.touchActive && this.game.mouse.updateHoverStats(this, true) && this.game.mouse.click && typeof this.action === 'function') {
+        //     if (!this.hold) {
+        //         this.game.mouse.click = false;
+        //     }
 
-            this.action.call(this.game, this);
-        }
+        //     this.action.call(this.game, this);
+        // }
     }
 
     draw() {
@@ -104,7 +107,7 @@ class Button extends _ObjectSettings {
             this.game.ctx.restore();
         }
     }
-    
+
     add(count) {
         this.text += count;
     }
