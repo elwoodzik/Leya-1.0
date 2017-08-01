@@ -49,10 +49,9 @@ class Mouse {
 
     mouseMove(e) {
         e.preventDefault();
+        this.mouseX = e.offsetX / this.game.scale1;
+        this.mouseY = e.offsetY / this.game.scale1;
         if (this.dragged) {
-            this.mouseX = e.offsetX / this.game.scale1;
-            this.mouseY = e.offsetY / this.game.scale1;
-
             this.dragged.x = this.mouseX - this.dragged.currentHalfWidth;
             this.dragged.y = this.mouseY - this.dragged.currentHalfHeight;
         }
@@ -379,7 +378,7 @@ class Mouse {
     trigger(obj, immovable, callback, hold) {
         if (this.click) {
             if (!this.trig) {
-                
+
                 this.trig = hold ? true : false;
 
                 if (Array.isArray(obj)) {
@@ -465,23 +464,25 @@ class Mouse {
         }
     }
 
-    onHover(obj, callback, hold) {
+    onHover(obj, callback) {
         if (Array.isArray(obj)) {
             for (let u = 0, uMax = obj.length; u < uMax; u++) {
-                if (this.updateHoverStats(obj[u], hold)) {
-                    return callback.call(this, obj[u]);
+                if (this.updateHoverStats(obj[u])) {
+                    if (typeof callback === 'function') {
+                        return callback.call(this, obj[u]);
+                    }
                 }
             }
         }
         else if (typeof obj === 'object' && obj != null) {
-            if (this.updateHoverStats(obj, hold)) {
-                return callback.call(this, obj);
+            if (this.updateHoverStats(obj)) {
+                if (typeof callback === 'function') {
+                    return callback.call(this, obj);
+                }
             }
         }
-        else if (obj === null) {
-            if (typeof callback === 'function') {
-                return callback.call(this);
-            }
+        else if (!obj) {
+            return false;
         }
     }
 }

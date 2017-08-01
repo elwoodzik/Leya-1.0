@@ -20,13 +20,18 @@ class ButtonImg extends _ObjectSettings {
         this.action = action;
         this.zIndex = 5;
         this.toggleTime = 300;
+        this.hold = false;
         this.fadeIn(this.toggleTime, null)
     }
 
     update() {
         this.game.mouse.trigger(this, false, () => {
-            this.action.call(this.game, this)
-        }, false)
+            if (typeof this.action === 'function') {
+                this.action.call(this.game, this)
+            }
+        }, this.hold)
+
+        this.game.mouse.onHover(this, null);
         // if (!this.touchActive) {
         //     this.game.mouse.touchIntersects(this, true);
         // }

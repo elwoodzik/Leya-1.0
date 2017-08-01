@@ -33,6 +33,7 @@ class Map extends _ObjectSettings {
 
         this.lastXScroll = null;
         this.lastYScroll = null;
+        this.setElements(arr.elements);
     }
 
     generate() {

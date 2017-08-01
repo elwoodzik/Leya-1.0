@@ -32,6 +32,7 @@ class Button extends _ObjectSettings {
         this.text = text;
         this.action = action;
         this.zIndex = 5;
+        this.hold = false;
 
         this.colors = ["#FFABAB", "#FFDAAB", "#DDFFAB", "#ABE4FF", "#D9ABFF"];
     }
@@ -41,8 +42,12 @@ class Button extends _ObjectSettings {
         //     this.game.mouse.touchIntersects(this, true);
         // }
         this.game.mouse.trigger(this, false, () => {
-            this.action.call(this.game, this)
-        }, true)
+            if (typeof this.action === 'function') {
+                this.action.call(this.game, this)
+            }
+        }, this.hold)
+
+        this.game.mouse.onHover(this, null);
         // if (this.touchActive && typeof this.action === 'function') {
         //     this.action.call(this.game, this);
         //     this.touchActive = false;
