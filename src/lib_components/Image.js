@@ -24,7 +24,7 @@ class Image extends _ObjectSettings {
 
     draw(lag) {
         //this.useRotate();
-        if (this.objAlfa !== 1) {
+        if (this.objAlfa !== 1 && this.game.ctx.globalAlpha === 1) {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
@@ -55,6 +55,9 @@ class Image extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+
+        this.fadeInHandler();
+        this.fadeOutHandler();
     }
 
     update(dt) {
@@ -68,7 +71,7 @@ class Image extends _ObjectSettings {
         }
     }
 
-    updateWhenPositionChange(x,y,callback) {
+    updateWhenPositionChange(x, y, callback) {
         console.log(x, this.x)
         if ((this.previousX !== this.x || this.previousY !== this.y)) {
             if (typeof _callback === 'function') {

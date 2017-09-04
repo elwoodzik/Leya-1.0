@@ -29,7 +29,7 @@ class Rect extends _ObjectSettings {
     }
 
     draw(lag) {
-        if (this.objAlfa !== 1) {
+        if (this.objAlfa !== 1 && this.game.ctx.globalAlpha === 1) {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
@@ -72,6 +72,8 @@ class Rect extends _ObjectSettings {
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();
         }
+        this.fadeInHandler();
+        this.fadeOutHandler();
     }
 
     update(dt) {
@@ -105,7 +107,7 @@ class Rect extends _ObjectSettings {
 
         if (distance > maxDistance) {
             // if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
-                
+
             this.body.velocity.x = Math.cos(this.body.angle / (180 / Math.PI)) * speed;
             this.body.velocity.y = Math.sin(this.body.angle / (180 / Math.PI)) * speed;
             //}

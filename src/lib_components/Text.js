@@ -21,7 +21,9 @@ class Text extends _ObjectSettings {
         this.color = color;
         this.text = text;
         this.action = action;
-        this.context.font = this.fontSize + "px Forte";
+        this.fontType = "Forte"
+        
+        this.context.font = this.fontSize + "px "+ this.fontType;
 
         this.body = new Body(this.game, this);
 
@@ -46,12 +48,12 @@ class Text extends _ObjectSettings {
     }
 
     draw() {
-        if (this.objAlfa !== 1) {
+        if (this.objAlfa !== 1 && this.game.ctx.globalAlpha === 1) {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
-
-        this.context.font = this.fontSize + "px Forte";
+       
+        this.context.font = this.fontSize + "px "+ this.fontType
         this.context.fillStyle = this.color;
         this.context.fillText(this.text, this.x, this.y);
         if (this.useStroke) {
@@ -69,7 +71,7 @@ class Text extends _ObjectSettings {
 
     redraw() {
         this.context.fillStyle = this.color;
-        this.context.font = this.fontSize + "px Forte";
+        this.context.font = this.fontSize + "px "+ this.fontType
         //this.currentWidth = this.textSize.width;
         this.context.fillText(this.text, this.x, this.y);
     }
@@ -129,6 +131,44 @@ class Text extends _ObjectSettings {
 
     get() {
         return this.text;
+    }
+
+    moveToPoint(x, y, speed, callback) {
+        this.positionToMoveX = Math.floor(x);
+        this.positionToMoveY = Math.floor(y);
+        this.positionSpeed = speed;
+        this.oldVelocityX = this.body.velocity.x;
+        this.oldVelocityY = this.body.velocity.y;
+        this.oldUseCollision = this.useCollision;
+        this.useCollision = false;
+        this.moveTo = true;
+
+        this.positionCallback = callback;
+    }
+
+    moveToPointHandler() {
+        if (this.moveTo) {
+
+            this.myX = Math.floor(this.x);
+            this.myY = Math.floor(this.y);
+
+            if (this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY)) {
+                this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);
+                this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+            } else if (this.moveTo) {
+                this.body.velocity.x = this.oldVelocityX;
+                this.body.velocity.y = this.oldVelocityY;
+                this.useCollision = this.oldUseCollision;
+                this.x = Math.floor(this.x);
+                this.y = Math.floor(this.y);
+                this.moveTo = false;
+                if (typeof this.positionCallback === 'function') {
+                    this.positionCallback.call(this.game, this);
+                }
+            }
+        }
     }
 };
 

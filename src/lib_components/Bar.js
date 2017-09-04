@@ -61,7 +61,7 @@ class Bar extends _ObjectSettings {
             this.game.ctx.closePath();
         }
         if (this.fillStyle) {
-            this.game.ctx.fillRect(this.renderX + this.lineWidth, this.renderY + this.lineWidth, this.statusX - this.lineWidth * 2, this.currentHeight - this.lineWidth * 2);
+            this.game.ctx.fillRect(this.renderX + this.lineWidth, this.renderY + this.lineWidth, (this.statusX - this.lineWidth * 2) <= 0 ? 0 : this.statusX - this.lineWidth * 2, this.currentHeight - this.lineWidth * 2);
         }
 
         if (this.objAlfa !== 1) {

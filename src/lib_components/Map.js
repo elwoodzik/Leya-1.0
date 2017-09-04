@@ -37,7 +37,7 @@ class Map extends _ObjectSettings {
     }
 
     generate() {
-        if (!this.game.mobile.active) {
+       // if (!this.game.mobile.active) {
             let ctx = document.createElement("canvas").getContext("2d");
             ctx.canvas.width = this.b[0].length * 64;
             ctx.canvas.height = this.b.length * 64;
@@ -60,11 +60,11 @@ class Map extends _ObjectSettings {
                 }
             }
 
-            this.imageMap = new Image();
-            this.imageMap.src = ctx.canvas.toDataURL("image/png");
-
+            // this.imageMap = new Image();
+            // this.imageMap.src = ctx.canvas.toDataURL("image/png");
+            this.imageMap = ctx.canvas
             ctx = null;
-        }
+        //}
     }
 
     draw(dt) {
@@ -73,7 +73,7 @@ class Map extends _ObjectSettings {
             this.game.ctx.globalAlpha = this.objAlfa;
         }
 
-        if (!this.game.mobile.active) {
+        // if (!this.game.mobile.active) {
             this.context.drawImage(
                 this.imageMap,
                 0, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
@@ -85,25 +85,25 @@ class Map extends _ObjectSettings {
                 this.cw,
                 this.ch
             );
-        } else {
-            for (let i = 0; i < this.b.length; i++) {
-                // 
-                for (let j = 0; j < this.b[i].length; j++) {
-                    // 
-                    this.context.drawImage(
-                        this.image,
-                        this.b[i][j].x,
-                        this.b[i][j].y,
-                        this.w,
-                        this.h,
-                        Math.floor((j * (this.currentWidth)) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0)),
-                        Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0)),
-                        (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
-                        (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
-                    );
-                }
-            }
-        }
+        // } else {
+        //     for (let i = 0; i < this.b.length; i++) {
+        //         // 
+        //         for (let j = 0; j < this.b[i].length; j++) {
+        //             // 
+        //             this.context.drawImage(
+        //                 this.image,
+        //                 this.b[i][j].x,
+        //                 this.b[i][j].y,
+        //                 this.w,
+        //                 this.h,
+        //                 Math.floor((j * (this.currentWidth)) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0)),
+        //                 Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0)),
+        //                 (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
+        //                 (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
+        //             );
+        //         }
+        //     }
+        // }
 
         if (this.objAlfa !== 1) {
             this.game.ctx.restore();

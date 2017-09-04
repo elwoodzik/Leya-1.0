@@ -1,4 +1,5 @@
 import _ObjectSettings from './_ObjectSettings';
+import Body from './Body';
 
 class ButtonImg extends _ObjectSettings {
 
@@ -17,6 +18,8 @@ class ButtonImg extends _ObjectSettings {
         //
         this.keyHover = keyHover === null ? this.key : keyHover;
 
+        this.body = new Body(this.game, this);
+
         this.action = action;
         this.zIndex = 5;
         this.toggleTime = 300;
@@ -32,6 +35,7 @@ class ButtonImg extends _ObjectSettings {
         }, this.hold)
 
         this.game.mouse.onHover(this, null);
+        this.moveToPointHandler();
         // if (!this.touchActive) {
         //     this.game.mouse.touchIntersects(this, true);
         // }
@@ -94,6 +98,44 @@ class ButtonImg extends _ObjectSettings {
     }
     changeImgHover(key) {
         this.keyHover = key;
+    }
+
+    moveToPoint(x, y, speed, callback) {
+        this.positionToMoveX = Math.floor(x);
+        this.positionToMoveY = Math.floor(y);
+        this.positionSpeed = speed;
+        this.oldVelocityX = this.body.velocity.x;
+        this.oldVelocityY = this.body.velocity.y;
+        this.oldUseCollision = this.useCollision;
+        this.useCollision = false;
+        this.moveTo = true;
+
+        this.positionCallback = callback;
+    }
+
+    moveToPointHandler() {
+        if (this.moveTo) {
+
+            this.myX = Math.floor(this.x);
+            this.myY = Math.floor(this.y);
+
+            if (this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY)) {
+                this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);
+                this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+            } else if (this.moveTo) {
+                this.body.velocity.x = this.oldVelocityX;
+                this.body.velocity.y = this.oldVelocityY;
+                this.useCollision = this.oldUseCollision;
+                this.x = Math.floor(this.x);
+                this.y = Math.floor(this.y);
+                this.moveTo = false;
+                if (typeof this.positionCallback === 'function') {
+                    this.positionCallback.call(this.game, this);
+                }
+            }
+        }
     }
 };
 

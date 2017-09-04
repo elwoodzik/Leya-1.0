@@ -210,6 +210,7 @@ class _ObjectSettings {
         this.currentTimerFade = time;
         this.timerFadeMin = 0;
         this.timerCallback = callback;
+        this.timerFadeInActive = false;
         this.timerFadeOutActive = true;
     }
 
@@ -218,6 +219,7 @@ class _ObjectSettings {
         this.currentTimerFade = 0;
         this.timerFadeMin = 0;
         this.timerCallback = callback;
+        this.timerFadeOutActive = false;
         this.timerFadeInActive = true;
     }
 
@@ -238,7 +240,7 @@ class _ObjectSettings {
     }
 
     fadeInHandler() {
-        if (this.timerFadeInActive) {
+        if (this.timerFadeInActive && this.objAlfa !== 1) {
 
             this.currentTimerFade += 1 / 60 * 1000;
             this.objAlfa = this.currentTimerFade / this.timerFade;
@@ -251,7 +253,24 @@ class _ObjectSettings {
                     return this.timerCallback.call();
                 }
             }
+        } else {
+            this.timerFadeInActive = false;
         }
+    }
+    setClone(x, y, w, h) {
+        this.clone = this.game.ctx.getImageData(x, y, w, h);
+    }
+    
+    hide(){
+        this.used = false;
+    }
+
+    show(){
+        this.used = true;
+    }
+
+    toggle(){
+       this.used = !this.used 
     }
 }
 

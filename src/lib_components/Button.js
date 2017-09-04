@@ -61,7 +61,7 @@ class Button extends _ObjectSettings {
     }
 
     draw() {
-        if (this.objAlfa !== 1) {
+        if (this.objAlfa !== 1 && this.game.ctx.globalAlpha === 1) {
             this.game.ctx.save();
             this.game.ctx.globalAlpha = this.objAlfa;
         }
