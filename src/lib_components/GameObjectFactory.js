@@ -11,7 +11,7 @@ import DialogImg from './DialogImg';
 import Particles from './Particles';
 import ButtonImg from './ButtonImg';
 import Grid from './Grid';
-//import Multiplayer from './Multiplayer';
+import Multiplayer from './Multiplayer';
 import Map from './Map';
 
 
@@ -58,10 +58,10 @@ class GameObjectFactory {
         return new Grid(this.game, context, count, width);
     }
 
-    // multiplayer(ip) {
-    //     this.game.multiplayer = new Multiplayer(this.game, ip);
-    //     return this.game.multiplayer;
-    // }
+    multiplayer(ip) {
+        this.game.multiplayer = new Multiplayer(this.game, ip);
+        return this.game.multiplayer;
+    }
 
     text(context, text, x, y, size, color, action) {
         return new Text(this.game, context, text, x, y, size, color, action);

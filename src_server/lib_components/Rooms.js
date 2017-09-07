@@ -8,7 +8,9 @@ class Rooms {
         that = this;
     }
 
-    create(options, callback){
+    
+
+    create(options, callback) {
         if (typeof callback !== 'function') {
             return console.error('brakuje callback albo nie jest funkcja');
         }
@@ -28,7 +30,7 @@ class Rooms {
                 objs: {}
             }
             that.rooms.push(room);
-
+            console.log(`stworzono pokoj ${options.name}`)
             callback(false, room);
         } else {
             callback('taki pokoj juz istnieje!', room);
@@ -46,21 +48,21 @@ class Rooms {
 
                     if (user.room) {
                         that.leaveRoom(user, this, () => {
-                            if (data) {
-                                room.data = data;
-                            }
+                            // if (data) {
+                            //     room.data = data;
+                            // }
                             user.room = data.name;
                             room.players.push(user);
                             room.users++;
-                            
+
                             this.join(data.name);
 
                             callback(false, room);
                         });
                     } else {
-                        if (data) {
-                            room.data = data;
-                        }
+                        // if (data) {
+                        //     room.data = data;
+                        // }
                         user.room = data.name;
                         room.players.push(user);
                         room.users++;
@@ -119,21 +121,21 @@ class Rooms {
         }
     }
 
-    close(roomName){
+    close(roomName) {
         let room = this.findRoomByName(roomName);
         room.open = false;
     }
 
-    getRoom(obj, callback){
+    getRoom(obj, callback) {
         let user = that.multiplayer.users.findUserById(this.id);
         let room = that.findRoomByName(user.room);
-        if(typeof callback === 'function'){
+        if (typeof callback === 'function') {
             callback(false, room);
         }
-        else{
+        else {
             callback('wystapil blad przy pobieraniu pokoju', null)
         }
-        
+
     }
 
     getUsersIdList(roomName) {
@@ -151,10 +153,10 @@ class Rooms {
         let user = this.multiplayer.users.findUserById(sockID);
         let room = this.findRoomByName(user.room);
 
-        if(room){
+        if (room) {
             callback(null, room)
         }
-        
+
         // let room = this.findRoomByName(roomName);
         // let users = [];
         // if (room) {
@@ -175,7 +177,7 @@ class Rooms {
         callback(rooms);
     }
 
-    onLeave(nic, callback){
+    onLeave(nic, callback) {
         let user = that.multiplayer.users.findUserById(this.id);
         that.leaveRoom(user, this, callback);
     }
@@ -195,11 +197,10 @@ class Rooms {
             }
             socket.leave(user.room);
             this.multiplayer.objs.remove(socket.id, room);
-            
+
             if (callback) {
-                console.log('z')
                 callback(false, this.rooms);
-            }else{
+            } else {
                 console.log('brak callbacka')
             }
 

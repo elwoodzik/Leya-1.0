@@ -23,6 +23,7 @@ class Multiplayer {
         this.getCurrentRoom((err, roomName) => {
             if (!err) {
                 this.emit('waiting for init', roomName);
+                this.onSocket('start match', this.onStartMatch);
                 this.onSocket('share obj', this.shareObj);
                 this.onSocket('removed objs', this.removeAllObjects);
                 this.onSocket('update obj', this.updateObject);
@@ -31,6 +32,18 @@ class Multiplayer {
             }
 
         })
+    }
+
+    onStartMatch = (options) => {
+        this.game.state.start(options.scene)
+        console.log(options)
+    }
+
+    startMatch(room, options) {
+        if (!options.scene) {
+            return console.error('musisz podac nazwe sceny. "{scene:"name"}')
+        }
+        this.emit('start match', room, options);
     }
 
     onSocket(name, callback) {
@@ -102,6 +115,7 @@ class Multiplayer {
             }
         }
     }
+
 
     createRoom(options, _callback) {
         this.emit('create room', options, (err, room) => {

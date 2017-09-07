@@ -21,7 +21,7 @@ class Socket {
                 } else {
                     socket.emit("connected", null, "Połączenie socketa - SUCCESS");
                     socket.on("waiting for init", this.afterInit.bind(socket));
-                    
+
                     socket.on("create room", this.multiplayer.rooms.create);
                     socket.on("join room", this.multiplayer.rooms.onJoin);
                     socket.on("leave room", this.multiplayer.rooms.onLeave);
@@ -31,11 +31,17 @@ class Socket {
                     socket.on("add object", this.multiplayer.objs.add);
                     socket.on("update obj", this.multiplayer.objs.update);
                     socket.on("remove obj", this.multiplayer.objs.onRemove);
+
+                    socket.on("start match", this.startMatch);
                     // callback socketow zdefiniowanych przez uzytkownika w Classie Game.
                     callback.call(socket, socket);
                 }
             });
         });
+    }
+
+    startMatch = (room, options) => {
+        this.emitToRoom('start match', room.name, options);
     }
 
     afterInit(room) {
@@ -81,7 +87,7 @@ class Socket {
             throw 'musisz podac jako pierwszy parametr nazwe socketu';
         }
         socket.broadcast.to(room).emit(name, data);
-       // this.io.in(room).emit(name, data);
+        // this.io.in(room).emit(name, data);
     }
 
     // wysyla wiadomosc tylko do okreslonego gracza

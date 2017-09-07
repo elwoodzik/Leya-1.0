@@ -11,7 +11,7 @@ class Multiplayer {
         this.rooms = new Rooms(this);
         this.objs = new Objs(this);
 
-        this.rooms.create.bind(this.socket)({ name: 'global', max: 0}, (err, room) => {
+        this.rooms.create.bind(this.socket)({ name: 'global', max: 0 }, (err, room) => {
 
         });
     }

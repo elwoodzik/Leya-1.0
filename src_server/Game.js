@@ -10,6 +10,7 @@ class Game {
         this.multiplayer = new Multiplayer(io);
 
         this.multiplayer.socket.initializeSockets((socket) => {
+            console.log("\nUżytkownik poprawnie Zalogowany " + socket.id + "\n");
             // tutaj sockety uzytkownika
             // socket.on(name,function) 
             socket.on("start game", (room) => {

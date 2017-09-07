@@ -1,5 +1,6 @@
 import config from './config';
 import path from 'path';
+import apiRouter from './api';
 
 import express from 'express';
 import homePage from './routes/home';
@@ -16,7 +17,7 @@ server.use('/', homePage);
 
 //let a = new Game();
 
-
+server.use('/api', apiRouter);
 server.use(express.static('public'));
 
 const sock_io = io.listen(server.listen(config.port, config.host, () => {
