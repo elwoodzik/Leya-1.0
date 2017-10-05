@@ -61,10 +61,11 @@ class Sprite extends _ObjectSettings {
             this.game.ctx.save();
             this.game.ctx.scale(-1, 1);
         }
+        
         this.game.ctx.drawImage(
             this.image,
-            this.states[this.state].sx + this.states[this.state].f[this.current_f] * this.states[this.state].fW,
-            this.states[this.state].sy,
+            this.states[this.state].sx + !this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fW : 0,
+            this.states[this.state].sy + this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fH : 0,
             this.states[this.state].fW,
             this.states[this.state].fH,
             Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW - this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
@@ -109,11 +110,11 @@ class Sprite extends _ObjectSettings {
 
         //this.context.clearRect(this.renderX, this.renderY, this.image.width, this.image.height);
         this.frameUpdate();
-
+        
         this.context.drawImage(
             this.image,
-            this.states[this.state].sx + this.states[this.state].f[this.current_f] * this.states[this.state].fW,
-            this.states[this.state].sy,
+            this.states[this.state].sx + !this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fW : 0,
+            this.states[this.state].sy + this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fH : 0,
             this.states[this.state].fW,
             this.states[this.state].fH,
             Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW - this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
@@ -266,7 +267,7 @@ class Sprite extends _ObjectSettings {
         let distance = Math.sqrt(dx * dx + dy * dy);
         let maxDistance = _maxDistance || 10;
         let speed = _speed || 4;
-       
+
         if (distance > maxDistance) {
             if (Math.abs(dx) > 1 && Math.abs(dy) > 1) {
                 if (type === 'up') {
@@ -348,14 +349,14 @@ class Sprite extends _ObjectSettings {
                     this.moveLinearTo = false;
                     this.positionLinearCallback.call(this.game, this);
                 }
-            }else if (this.linearType === 'right') {
+            } else if (this.linearType === 'right') {
                 if (this.x <= this.positionToLinearMoveX) {
                     this.body.velocity.x = +this.linearSpeed;
                 } else {
                     this.moveLinearTo = false;
                     this.positionLinearCallback.call(this.game, this);
                 }
-            }else if (this.linearType === 'left') {
+            } else if (this.linearType === 'left') {
                 if (this.x >= this.positionToLinearMoveX) {
                     this.body.velocity.x = -this.linearSpeed;
                 } else {
@@ -363,7 +364,7 @@ class Sprite extends _ObjectSettings {
                     this.positionLinearCallback.call(this.game, this);
                 }
             }
-            
+
         }
     }
 

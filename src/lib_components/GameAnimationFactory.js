@@ -4,7 +4,7 @@ class GameAnimationFactory {
         this.sprite = sprite;
     }
 
-    add(key, x, y, w, h, f, flip) {
+    add(key, x, y, w, h, f, flip, horizontal) {
         return this.sprite.states[key] = {
             key: key,
             sx: x,
@@ -12,8 +12,31 @@ class GameAnimationFactory {
             fW: w,
             fH: h,
             f: f,
-            flip: flip
+            flip: flip,
+            horizontal: horizontal
         };
+    }
+
+    addJson(options) {
+        if (!options.key) {
+            return console.error('musi byc podany klucz "key"');
+        }
+       
+        if (!options.f || !Array.isArray(options.f)) {
+            return console.error('musi byc dodana tablica "f"');
+        }
+
+        return this.sprite.states[options.key] = options.f;
+        // return this.sprite.states[key] = [{
+        //     key: key,
+        //     sx: x,
+        //     sy: y,
+        //     fW: w,
+        //     fH: h,
+        //     f: f,
+        //     flip: flip,
+        //     horizontal: horizontal
+        // }];
     }
 
     play(key, delay, callback, callbackDellay) {
@@ -58,7 +81,7 @@ class GameAnimationFactory {
         this.sprite.current_f = 0;
     }
 
-    get(){
+    get() {
         return this.sprite.state;
     }
 };

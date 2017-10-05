@@ -239,6 +239,47 @@ class _ObjectSettings {
         }
     }
 
+    topShooter(blockWidth, callback) {
+        //if(this.game.keyboard.use['W'].pressed){
+        if (Math.abs(this.body.velocity.x) > 0 || Math.abs(this.body.velocity.y) > 0) {
+            this.column = Math.round(((this.x) / blockWidth));
+            this.row = Math.round(((this.y) / blockWidth));
+
+            this.next_columnRight = Math.round(((this.x + blockWidth) / blockWidth));
+            this.next_columnLeft = Math.round(((this.x - blockWidth) / blockWidth));
+
+            this.next_rowBottom = Math.floor(((this.y + this.currentHeight) / blockWidth));
+            this.next_rowTop = Math.floor(((this.y) / blockWidth));
+            //
+            if (this.game.map.b[this.next_rowBottom][this.column].type != 'empty') {
+                this.y = this.row * blockWidth
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                return callback('bottom');
+            }
+            if (this.game.map.b[this.next_rowTop][this.column].type != 'empty') {
+                this.y = this.row * blockWidth
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                return callback('top');
+            }
+            if (this.game.map.b[this.row][this.next_columnRight].type != 'empty') {
+                this.x = this.column * blockWidth;
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                return callback('');
+            }
+            if (this.game.map.b[this.row][this.next_columnLeft].type != 'empty') {
+                this.x = this.column * blockWidth;
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                return callback('');
+            }
+        }
+        return false;
+        // }
+    }
+
     fadeInHandler() {
         if (this.timerFadeInActive && this.objAlfa !== 1) {
 
@@ -260,17 +301,17 @@ class _ObjectSettings {
     setClone(x, y, w, h) {
         this.clone = this.game.ctx.getImageData(x, y, w, h);
     }
-    
-    hide(){
+
+    hide() {
         this.used = false;
     }
 
-    show(){
+    show() {
         this.used = true;
     }
 
-    toggle(){
-       this.used = !this.used 
+    toggle() {
+        this.used = !this.used
     }
 }
 

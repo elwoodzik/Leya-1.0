@@ -39,8 +39,8 @@ class Map extends _ObjectSettings {
     generate() {
        // if (!this.game.mobile.active) {
             let ctx = document.createElement("canvas").getContext("2d");
-            ctx.canvas.width = this.b[0].length * 64;
-            ctx.canvas.height = this.b.length * 64;
+            ctx.canvas.width = this.b[0].length * 32;
+            ctx.canvas.height = this.b.length * 32;
 
             for (let i = 0; i < this.b.length; i++) {
                 // 
@@ -147,11 +147,11 @@ class Map extends _ObjectSettings {
             this.b.push([]);
             for (let j = 0; j < arr[i].length; j++) {
                 let tile = {};
-                tile.x = ((arr[i][j] - 1) % 13) * 64;
-                tile.y = (Math.floor((arr[i][j] - 1) / 13)) * 64;
+                tile.x = ((arr[i][j] ) % 19) * 33;
+                tile.y = (Math.floor((arr[i][j] ) / 19)) * 33;
 
-                if (this.tiles[arr[i][j] - 1]) {
-                    tile.type = !this.tiles[arr[i][j] - 1].type ? 'empty' : this.tiles[arr[i][j] - 1].type;
+                if (this.tiles[arr[i][j] ]) {
+                    tile.type = !this.tiles[arr[i][j] ].type ? 'empty' : this.tiles[arr[i][j] ].type;
                 } else {
                     tile.type = 'empty';
                 }
