@@ -89,7 +89,6 @@ class GameObjectFactory {
     }
 
     toMulti(obj) {
-
         let o = {
             x: obj.x,
             y: obj.y,
@@ -102,6 +101,7 @@ class GameObjectFactory {
             state: obj.state,
             type: obj.type,
             oClass: obj.oClass,
+            angle: obj.body.angle,
             arguments: obj._arguments
         }
         this.game.multiplayer.emit('add object', o, function (ID, sockID, room) {

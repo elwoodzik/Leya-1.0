@@ -6,9 +6,7 @@ class Rooms {
         this.rooms = [];
         this.multiplayer = multiplayer;
         that = this;
-    }
-
-    
+    }  
 
     create(options, callback) {
         if (typeof callback !== 'function') {
