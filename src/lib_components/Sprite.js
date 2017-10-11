@@ -45,7 +45,6 @@ class Sprite extends _ObjectSettings {
             this.game.ctx.globalAlpha = this.objAlfa;
         }
 
-
         if (this.previousX) {
             this.renderX = (this.x - this.previousX) * dt + this.previousX //this.x + (this.body.velocity.x * dt);                 
         } else {
@@ -61,7 +60,7 @@ class Sprite extends _ObjectSettings {
             this.game.ctx.save();
             this.game.ctx.scale(-1, 1);
         }
-        
+
         this.game.ctx.drawImage(
             this.image,
             this.states[this.state].sx + !this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fW : 0,
@@ -110,7 +109,7 @@ class Sprite extends _ObjectSettings {
 
         //this.context.clearRect(this.renderX, this.renderY, this.image.width, this.image.height);
         this.frameUpdate();
-        
+
         this.context.drawImage(
             this.image,
             this.states[this.state].sx + !this.states[this.state].horizontal ? this.states[this.state].f[this.current_f] * this.states[this.state].fW : 0,
@@ -155,6 +154,12 @@ class Sprite extends _ObjectSettings {
             if (typeof _callback === 'function') {
                 _callback(this)
             }
+        }
+    }
+
+    multiUpdate() {
+        if (this.body.angle !== this.previousAngle || (this.previousX !== this.x || this.previousY !== this.y) && this.ID) {
+            this.game.multiplayer.emit("update obj", { x: this.x, y: this.y, angle: this.body.angle, ID: this.ID, room: this.room });
         }
     }
 

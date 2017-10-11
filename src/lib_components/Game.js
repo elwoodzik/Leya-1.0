@@ -287,7 +287,7 @@ class Game {
 
                 canvas.style.width = width + "px";
                 canvas.style.height = height + "px";
-              
+
                 if (!this.mobile.active) {
                     canvas.style.position = 'absolute';
                     canvas.style.left = '50%';
@@ -410,6 +410,9 @@ class Game {
             if (entityCapture.used) {
                 entityCapture.previousX = entityCapture.x;
                 entityCapture.previousY = entityCapture.y;
+                if (entityCapture.body) {
+                    entityCapture.body.previousAngle = entityCapture.angle;
+                }
             }
             entityCapture = null;
         }
