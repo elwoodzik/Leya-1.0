@@ -7,7 +7,7 @@ class Objs {
     constructor(multiplayer, room) {
         that = this;
 
-        
+
         this.objs = {};
         this.multiplayer = multiplayer;
     }
@@ -15,15 +15,15 @@ class Objs {
     add(obj, callback) {
         // console.log(obj)
         const ID = Objs.ID;
-        
+
         // let room = that.multiplayer.users.findUserById(this.id).room;
         // room.objs[ID] = 
-        
+
         that.objs[ID] = obj;
         that.objs[ID].sockID = this.id;
         that.objs[ID].ID = ID;
         that.objs[ID].room = that.multiplayer.users.findUserById(this.id).room;
-     
+
         that.multiplayer.socket.broadcastToRoom(this, "share obj", that.objs[ID].room, obj);
 
         Objs.ID++;
@@ -32,7 +32,7 @@ class Objs {
 
     }
 
-    onRemove(obj, callback){
+    onRemove(obj, callback) {
         that.remove(this.id);
         callback(null, that.objs);
     }
@@ -66,9 +66,12 @@ class Objs {
     }
 
     update(data) {
-        that.objs[data.ID].x = data.x;
-        that.objs[data.ID].y = data.y;
-        that.multiplayer.socket.broadcastToRoom(this, "update obj",  that.objs[data.ID].room, that.objs[data.ID]);
+        if (that.objs[data.ID]) {
+            that.objs[data.ID].x = data.x;
+            that.objs[data.ID].y = data.y;
+            that.objs[data.ID].angle = data.angle;
+            that.multiplayer.socket.broadcastToRoom(this, "update obj", that.objs[data.ID].room, that.objs[data.ID], that.objs[data.ID].angle);
+        }
         //that.multiplayer.socket.emitToRoom.emit("update obj", that.objs[data.ID]);
     }
 
